@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var fibo = {
+            "allValue" : [],
+            "zero" : 0,
+            "one" : 0,
+            "NumberDef" : function(num){
+                if(num>=3){
+                    return 3;
+                }
+                return num;
+            },
+            "calc" : function(n){
+                if(n==0){
+                    this.zero++;
+                    return 0;
+                }else if(n==1){
+                    this.one++;
+                    return 1;
+                }else{
+                    return this.calc(n-1) + this.calc(n-2);
+                }
+            },
+            "main" : function(t){
+                while(t!=0){
+                    this.calc(
+                        
+                        this.NumberDef( Number(prompt()) )
+                        
+                        );
+                    this.allValue.push(this.zero);
+                    this.allValue.push(this.one);
+                    this.zero = 0;
+                    this.one = 0;
+                    t--;
+                }
+                while(this.allValue.length != 0){
+                    console.log(this.allValue[0] + " " + this.allValue[1]);
+                    this.allValue.shift();
+                    this.allValue.shift();
+                }
+
+            }
+
+
+        };
+
+
+        fibo.main( Number(prompt()) );
+       
+    </script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var prince = {
+            "startLoc" : [],//출발점
+            "goalLoc" : [],//도착점
+            "startAndCDistance" : [],//출발점이 행성계 안인지 밖인지 확인한 배열
+            "goalAndCDistance" : [],//도착점이 행성계 안인지 밖인지 확인한 배열
+            "getResult" : [],//결과값을 모은다
+            "compareDistance" : function(){
+                var num = 0;
+                while( this.startAndCDistance.length != 0 ){
+                    if( this.startAndCDistance.shift() != this.goalAndCDistance.shift() ){
+                        num++;
+                    }
+                }
+                return num;
+            },//둘의 안팎이 다를 경우만 세어 리턴
+            "farOrClose" : function(x1, y1, x2, y2, c1, c2, r){
+                if(
+                    Math.sqrt( 
+                        Math.pow( ( x1 - c1 ) , 2 ) + Math.pow( ( y1 - c2 ) , 2 )
+                    )//출발점과 행성계의 중심의 거리를 피타고라스 정리를 통해 계산한 것
+                    > 
+                    r//그것이 행성계의 반지름보다 큰가? = 출발점이 행성계 바깥에 있는가?
+                ){
+                    this.startAndCDistance.push(0);
+                }
+                else{
+                    this.startAndCDistance.push(1);
+                }
+
+                if(
+                    Math.sqrt( 
+                        Math.pow( ( x2 - c1 ) , 2 ) + Math.pow( ( y2 - c2 ) , 2 )
+                    )//출발점과 행성계의 중심의 거리를 피타고라스 정리를 통해 계산한 것
+                    > 
+                    r//그것이 행성계의 반지름보다 큰가? = 출발점이 행성계 바깥에 있는가?
+                ){
+                    this.goalAndCDistance.push(0);
+                }
+                else{
+                    this.goalAndCDistance.push(1);
+                }
+            },//둘의 안 팎을 확인
+            "main" : function(t){
+                while(t!=0){
+                    this.startLoc.push( Number( prompt() ) );
+                    this.startLoc.push( Number( prompt() ) );
+                    this.goalLoc.push( Number( prompt() ) );
+                    this.goalLoc.push( Number( prompt() ) );
+
+                    var C = Number( prompt() );
+
+                    while( C != 0){
+                        
+                        this.farOrClose( this.startLoc[0], this.startLoc[1], this.goalLoc[0], this.goalLoc[1],  Number( prompt() ),  Number( prompt() ),  Number( prompt() ) );
+                        
+                        C--;   
+                    }
+
+                    this.getResult.push( this.compareDistance() );
+                    t--;
+                }
+
+                while( this.getResult.length != 0){
+                    console.log( this.getResult.shift() );
+                }
+
+            }
+        }
+
+        prince.main( Number( prompt() ) );
+    </script>
+</body>
+</html>
