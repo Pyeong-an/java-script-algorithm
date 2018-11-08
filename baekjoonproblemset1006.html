@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        var testcase = Number( prompt() );
+
+
+        while(testcase!=0){
+            var areaNum = Number( prompt() );
+            var solNum = Number( prompt() );
+            var enemy = [];
+            for(var i = areaNum * 2; i != 0; i--){
+                enemy.push( Number( prompt() ) );
+            }
+            
+            //커버가 가능한 곳을 확인하기 위해 각 면의 합을 전부 구한다(ㅋㅋ)
+            var sum = [];
+
+
+            var result = areaNum*2;
+            
+            //1번 연결되는게 하나라도 있을 경우 이 함수를 쓴다.
+            var connection = function(){
+
+                for(var i = 0;i <areaNum;i++){
+                    
+                    sum[i] = 0;
+
+
+                    var connect1 = false;
+                    var connect2 = false;
+                    var connect3 = false;
+                    //여기부터 되는 방향 합 구하기
+                    if(i ==0){
+
+                        if(solNum>=enemy[i] + enemy[i+1]){
+                            sum[i]++;
+                            connect1 = true;
+                        }
+                        if(solNum>=enemy[i] + enemy[areaNum - 1]){
+                            sum[i]++;
+                            connect2 = true;
+                        }
+                        if(solNum>=enemy[i] + enemy[i + areaNum]){
+                            sum[i]++;
+                            connect3 = true;
+                        }
+
+                    }else if(i == areaNum-1){
+
+                        if(solNum>=enemy[i] + enemy[0]){
+                            sum[i]++;
+                            connect1 = true;
+                        }
+                        if(solNum>=enemy[i] + enemy[i-1]){
+                            sum[i]++;
+                            connect2 = true;
+                        }
+                        if(solNum>=enemy[i] + enemy[i + areaNum]){
+                            sum[i]++;
+                            connect3 = true;
+                        }
+
+                    }else{
+
+                        if(solNum>=enemy[i] + enemy[i+1]){
+                            sum[i]++;
+                            connect1 = true;
+                        }
+                        if(solNum>=enemy[i] + enemy[i-1]){
+                            sum[i]++;
+                            connect2 = true;
+                        }
+                        if(solNum>=enemy[i] + enemy[i + areaNum]){
+                            sum[i]++;
+                            connect3 = true;
+                        }
+
+                    }
+                    //여기까지 되는 방향 합 구하기
+                    if(sum[i]==0){
+                        enemy[i] = solNum;
+                    }
+                    if(sum[i]==1){
+
+                        result--;
+                        enemy[i] = solNum;
+
+                        if(connect1 = true){
+                            
+                            if(i==areaNum-1){
+                                enemy[0] = solNum;
+                            }else{
+                                enemy[i+1] = solNum;
+                            }
+
+                        }
+                        if(connect2 = true){
+
+                            if(i==0){
+                                enemy[areaNum-1]=solNum;
+                            }else{
+                                enemy[i-1]=solNum;
+                            }
+
+                        }
+                        if(connect3 = true){
+
+                            enemy[i + areaNum] = solNum;
+
+                        }
+
+                    }
+                        
+
+                }
+
+                for(var i = 0;i <areaNum;i++){
+                    
+                    sum[i+areaNum] = 0;
+
+                    var connect1 = false;
+                    var connect2 = false;
+                    var connect3 = false;
+                    //여기부터 되는 방향 합 구하기
+                    if(i ==0){
+
+                        if(solNum>=enemy[i+areaNum] + enemy[i+1+areaNum]){
+                            sum[i+areaNum]++;
+                            connect1 = true;
+                        }
+                        if(solNum>=enemy[i+areaNum] + enemy[areaNum*2 - 1]){
+                            sum[i+areaNum]++;
+                            connect2 = true;
+                        }
+                        if(solNum>=enemy[i] + enemy[i + areaNum]){
+                            sum[i+areaNum]++;
+                            connect3 = true;
+                        }
+
+                    }else if(i == areaNum-1){
+
+                        if(solNum>=enemy[i+areaNum] + enemy[areaNum]){
+                            sum[i+areaNum]++;
+                            connect1 = true;
+                        }
+                        if(solNum>=enemy[i+areaNum] + enemy[i-1+areaNum]){
+                            sum[i+areaNum]++;
+                            connect2 = true;
+                        }
+                        if(solNum>=enemy[i] + enemy[i + areaNum]){
+                            sum[i+areaNum]++;
+                            connect3 = true;
+                        }
+
+                    }else{
+
+                        if(solNum>=enemy[i+areaNum] + enemy[i+1+areaNum]){
+                            sum[i+areaNum]++;
+                            connect1 = true;
+                        }
+                        if(solNum>=enemy[i+areaNum] + enemy[i-1+areaNum]){
+                            sum[i+areaNum]++;
+                            connect2 = true;
+                        }
+                        if(solNum>=enemy[i] + enemy[i + areaNum]){
+                            sum[i+areaNum]++;
+                            connect3 = true;
+                        }
+
+                    }
+                    //여기까지 되는 방향 합 구하기
+                    if(sum[i+areaNum]==0){
+                        enemy[i+areaNum] = solNum;
+                    }
+                    if(sum[i+areaNum]==1){
+
+                        result--;
+                        enemy[i] = solNum;
+
+                        if(connect1 = true){
+                            
+                            if(i==areaNum-1){
+                                enemy[areaNum] = solNum;
+                            }else{
+                                enemy[i+1+areaNum] = solNum;
+                            }
+
+                        }
+                        if(connect2 = true){
+
+                            if(i==0){
+                                enemy[areaNum*2-1]=solNum;
+                            }else{
+                                enemy[i-1+areaNum]=solNum;
+                            }
+
+                        }
+                        if(connect3 = true){
+
+                            enemy[i] = solNum;
+
+                        }
+
+                    }
+                        
+
+                }
+
+
+            }
+            //함수 끝...
+            //두개 이상 연결 가능한 경우만 있을 경우 아무거나 하나 연결 시키고 위의 함수를 돌리면 된다
+
+            var connection2 = function(){
+
+                for(var i = 0; i<areaNum*2; i++){
+                    if(sum[i]==1){
+                        return;
+                    }
+                }
+                if(sumTotal == 0){
+                    return;
+                }
+
+                for(var i = 0; i<areaNum;i++){
+                    if(sum[i]>=2){
+
+                        if(solNum>=enemy[i]+enemy[i+areaNum]){
+                            enemy[i]=solNum;
+                            enemy[i+areaNum]=solNum;
+                            result--;
+                            return;
+                        }
+                        if(i==0){
+                            enemy[i]=solNum;
+                            enemy[i+1]=solNum;
+                            result--;
+                            return;
+                        }
+                        enemy[i]=solNum;
+                        enemy[i-1]=solNum;
+                        result--;
+                        return;
+
+                    }
+                }
+
+                for(var i = 0; i<areaNum;i++){
+                    if(sum[i+areaNum]>=2){
+
+                        if(solNum>=enemy[i]+enemy[i+areaNum]){
+                            enemy[i]=solNum;
+                            enemy[i+areaNum]=solNum;
+                            result--;
+                            return;
+                        }
+                        if(i==0){
+                            enemy[i+areaNum]=solNum;
+                            enemy[i+1+areaNum]=solNum;
+                            result--;
+                            return;
+                        }
+                        enemy[i+areaNum]=solNum;
+                        enemy[i-1+areaNum]=solNum;
+                        result--;
+                        return;
+
+                    }
+                }
+
+
+
+
+            }
+            //이하 반복문
+            var sumTotal = 1;//sum의 모든 원소가 0이되면 끝날 수 있도록 total을 sum의 합으로 정의한다(반복문 안에서!)
+
+            while(sumTotal != 0){
+                connection();
+
+                sumTotal = 0;
+                for(var i = 0; i<sum.length;i++){
+                    sumTotal += sum[i]
+                }
+
+                connection2();
+                
+
+                
+            }
+
+            testcase--;
+        }
+
+
+        console.log(result);
+
+
+
+
+
+        
+
+
+
+    </script>
+</body>
+</html>
